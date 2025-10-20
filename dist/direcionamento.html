@@ -30,6 +30,7 @@
   </noscript>
   
   <style>
+    html { min-height: 100%; background-color: #012d1a; }
     :root {
       color-scheme: light;
       --brand-primary: #018942;
@@ -119,6 +120,7 @@
         radial-gradient(circle at 40% 80%, rgba(1, 77, 40, 0.3) 0%, transparent 50%),
         linear-gradient(135deg, #018942 0%, #016b35 25%, #014d28 50%, #012d1a 75%, #001a0f 100%);
       background-size: 400% 400%, 300% 300%, 500% 500%, 400% 400%;
+      background-color: #012d1a; /* mobile-safe fallback */
       /* Foco em 1 animação suave; removido float para reduzir custo */
       animation: gradientShift 24s ease infinite;
       font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -188,6 +190,8 @@
       pointer-events: none;
       z-index: -1;
       will-change: background-position;
+      /* Ensure a visible base color if overlays fail on mobile */
+      background-color: transparent;
     }
 
     main {
