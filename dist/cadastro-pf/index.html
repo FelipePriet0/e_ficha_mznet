@@ -685,7 +685,7 @@
         <div class="progress-fill"></div>
         <div class="progress-text">0% Concluído</div>
       </div>
-      <form class="row g-3" action="sucesso-pf.html" method="get" novalidate>
+      <form class="row g-3" novalidate>
         <!-- Seção: Dados Pessoais -->
         <div class="col-12">
           <div class="section-header">
@@ -944,7 +944,7 @@
       const form = document.querySelector('form');
       if (!form || typeof submitEficha !== 'function') return;
       form.addEventListener('submit', async function(e){
-        if (e) e.preventDefault();
+        if (e) { e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation(); }
         // coleta campos com as máscaras originais
         const nome = (document.getElementById('nome')?.value || '').trim();
         const cpf = (document.getElementById('cpf')?.value || '').trim();
