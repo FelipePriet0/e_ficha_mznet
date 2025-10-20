@@ -1,4 +1,4 @@
-const FUNCTION_URL = "https://juxpvvpogpolspxnecsf.supabase.co/functions/v1/e_ficha";
+const FUNCTION_URL = "https://juxpvvpogpolspxnecsf.functions.supabase.co/e_ficha";
 
 const E_FICHA_TOKEN =
   "eficha_prod_Jn3jJ6m2bJHcJYx1jXJ9yJmJQwq7JjJg-1pZQ5Jd1xJQe7fK3mL2sN4tU6vW8yZ0";
@@ -30,4 +30,3 @@ async function submitEficha(payload) {
   if (!resp.ok) throw new Error(`Falha ${resp.status}`);
   return resp.json();
 }
-
