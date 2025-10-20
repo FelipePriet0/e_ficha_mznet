@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- NOTA DEV: Máscaras (CPF/CNPJ/Data/Telefone) seguem UX padronizada com backspace amigável. Leia ReadmeMasks/README.md antes de editar. -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#018942" />
+  <meta name="color-scheme" content="light" />
+  
+  <!-- SEO Premium -->
+  <title>MZNet | Cadastro Empresarial - Sócios e Plano</title>
+  <meta name="description" content="Finalize seu cadastro empresarial MZNet informando os sócios e escolhendo o plano ideal." />
+  <meta name="keywords" content="MZNet, cadastro empresarial, sócios, plano internet, vencimento" />
+  <meta name="author" content="MZNet Software" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="MZNet | Cadastro Empresarial - Sócios e Plano" />
+  <meta property="og:description" content="Finalize seu cadastro empresarial MZNet informando os sócios e escolhendo o plano ideal." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  
+  <!-- Dependencies -->
+  <!-- Bootstrap 5 CSS (async to reduce render blocking) -->
+  <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" media="print" onload="this.media='all'" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <noscript>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  </noscript>
+  
+  
+  <!-- Fonts Premium -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --brand-primary: #018942;
+      --brand-600: #016b35;
+      --brand-700: #014d28;
+      --brand-accent: #00a855;
+      --white: #FFFFFF;
+      --shadow-elegant: 0 12px 40px rgba(1, 137, 66, 0.25);
+      --shadow-glow: 0 0 60px rgba(1, 137, 66, 0.3);
+      --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(0, 168, 85, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(1, 107, 53, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(1, 77, 40, 0.3) 0%, transparent 50%),
+        linear-gradient(135deg, #018942 0%, #016b35 25%, #014d28 50%, #012d1a 75%, #001a0f 100%);
+      background-size: 400% 400%, 300% 300%, 500% 500%, 400% 400%;
+      animation: gradientShift 24s ease infinite;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #fff;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(4px 4px at 15% 25%, rgba(255, 255, 255, 0.8), transparent),
+        radial-gradient(3px 3px at 35% 15%, rgba(0, 168, 85, 0.6), transparent),
+        radial-gradient(2px 2px at 55% 35%, rgba(255, 255, 255, 0.7), transparent),
+        radial-gradient(5px 5px at 75% 45%, rgba(1, 137, 66, 0.5), transparent),
+        radial-gradient(3px 3px at 25% 65%, rgba(255, 255, 255, 0.6), transparent),
+        radial-gradient(4px 4px at 65% 75%, rgba(0, 168, 85, 0.4), transparent),
+        radial-gradient(2px 2px at 85% 25%, rgba(255, 255, 255, 0.8), transparent),
+        radial-gradient(3px 3px at 45% 85%, rgba(1, 107, 53, 0.5), transparent),
+        radial-gradient(1px 1px at 20% 40%, rgba(255, 255, 255, 0.4), transparent),
+        radial-gradient(1px 1px at 60% 20%, rgba(0, 168, 85, 0.3), transparent),
+        radial-gradient(1px 1px at 80% 60%, rgba(255, 255, 255, 0.5), transparent),
+        radial-gradient(1px 1px at 30% 80%, rgba(1, 137, 66, 0.4), transparent);
+      background-size: 300% 300%, 400% 400%, 250% 250%, 350% 350%, 200% 200%, 500% 500%, 180% 180%, 320% 320%, 150% 150%, 280% 280%, 220% 220%, 380% 380%;
+      background-position: 0% 0%, 20% 20%, 40% 40%, 60% 60%, 80% 80%, 10% 10%, 30% 30%, 50% 50%, 70% 70%, 90% 90%, 5% 5%, 15% 15%;
+      animation: particleMove1 36s linear infinite;
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(rgba(0, 168, 85, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 168, 85, 0.02) 1px, transparent 1px),
+        linear-gradient(45deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+        linear-gradient(-45deg, rgba(1, 137, 66, 0.01) 1px, transparent 1px);
+      background-size: 50px 50px, 50px 50px, 25px 25px, 25px 25px, 100px 100px, 100px 100px;
+      background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
+      /* animation: gridMove 40s linear infinite; */
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .hero-shell { 
+      flex: 1 0 auto; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      padding: 2.5rem 1.25rem 1rem; 
+      min-height: calc(100vh - 80px);
+    }
+    
+    .card-shell {
+      width: min(100%, 420px);
+      border-radius: 24px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      background: 
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(0, 168, 85, 0.08) 100%);
+      backdrop-filter: blur(10px);
+      box-shadow: 
+        0 18px 48px rgba(0, 0, 0, 0.3),
+        0 0 28px rgba(1, 137, 66, 0.18),
+        inset 0 1px 2px rgba(255, 255, 255, 0.18);
+      padding: 3rem 2rem;
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.9s ease-out 0.2s both;
+      contain: paint;
+    }
+
+    .card-shell::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      animation: cardRotate 20s linear infinite;
+      z-index: -1;
+    }
+
+    .card-shell::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.3), transparent),
+        radial-gradient(1px 1px at 60% 70%, rgba(0, 168, 85, 0.2), transparent),
+        radial-gradient(2px 2px at 80% 20%, rgba(255, 255, 255, 0.25), transparent),
+        radial-gradient(1px 1px at 40% 80%, rgba(1, 137, 66, 0.15), transparent);
+      background-size: 60px 60px, 40px 40px, 80px 80px, 30px 30px;
+      /* animation: dotMove 15s linear infinite; */
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .tagline {
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.95);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(45deg, #ffffff, #00a855, #ffffff);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: 
+        fadeInUp 0.8s ease-out 0.4s both,
+        gradientShift 4s ease infinite;
+    }
+    
+    .logo-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+      animation: fadeInUp 0.8s ease-out 0.6s both;
+    }
+
+    .logo-wrap img {
+      filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.3));
+      transition: transform 0.3s ease;
+    }
+
+    .logo-wrap:hover img {
+      transform: scale(1.05);
+    }
+    
+    .hero-title {
+      font-size: 2rem;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      color: #fff;
+      text-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(1, 137, 66, 0.3);
+      animation: 
+        fadeInUp 0.8s ease-out 0.8s both,
+        textGlow 4s ease-in-out infinite;
+      white-space: nowrap;
+    }
+    @media (max-width: 576px) {
+      .hero-title {
+        font-size: 1.6rem;
+      }
+    }
+    @media (max-width: 400px) {
+      .hero-title {
+        font-size: 1.4rem;
+      }
+    }
+    .form-label { 
+      font-size: 0.8rem; 
+      font-weight: 600; 
+      color: #fff; 
+      margin-bottom: 0.5rem; 
+      display: flex; 
+      align-items: center; 
+      gap: 0.5rem; 
+      white-space: nowrap; 
+    }
+    
+    @media (max-width: 576px) {
+      .form-label { 
+        font-size: 0.7rem; 
+        white-space: normal; 
+        line-height: 1.3; 
+        margin-bottom: 0.4rem; 
+      }
+    }
+    
+    @media (max-width: 400px) {
+      .form-label { 
+        font-size: 0.65rem; 
+      }
+    }
+    .form-label::before { content: ''; width: 6px; height: 6px; background: #fff; border-radius: 50%; }
+    .input-pill { border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.3); background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); color: #fff; padding: 0.7rem 1rem; transition: all 0.3s ease; }
+    .form-control.input-pill, .form-select.input-pill, input.input-pill, select.input-pill { border-radius: 12px !important; }
+    .form-control.input-pill { background: rgba(255, 255, 255, 0.95) !important; color: #018942 !important; border-color: rgba(255, 255, 255, 0.3); }
+    .form-control.input-pill:focus { background: #fff; color: #018942; border-color: #018942; box-shadow: 0 0 0 3px rgba(1, 137, 66, 0.2); transform: translateY(-1px); }
+    .form-control.input-pill::placeholder { color: rgba(1, 137, 66, 0.6); }
+    input.input-pill:-webkit-autofill, input.input-pill:-webkit-autofill:hover, input.input-pill:-webkit-autofill:focus { -webkit-text-fill-color: #018942; -webkit-box-shadow: 0 0 0px 1000px #fff inset; box-shadow: 0 0 0px 1000px #fff inset; }
+    .form-select.input-pill { background: rgba(255, 255, 255, 0.95) !important; color: #018942 !important; border-color: rgba(255, 255, 255, 0.3); }
+    .form-select.input-pill:focus { background: #fff; color: #018942; border-color: #018942; box-shadow: 0 0 0 3px rgba(1, 137, 66, 0.2); transform: translateY(-1px); }
+    /* Compactação dos controles grandes */
+    .form-control-lg, .form-select-lg { padding: 0.55rem 0.9rem !important; font-size: 0.95rem !important; line-height: 1.35 !important; }
+    @media (max-width: 576px) { .form-control-lg, .form-select-lg { padding: 0.5rem 0.85rem !important; font-size: 0.9rem !important; } }
+    .form-select.input-pill option { color: #018942; background: #fff; }
+    .form-control.input-pill.is-valid, .form-select.input-pill.is-valid { border-color: var(--bs-success) !important; }
+    .form-control.input-pill.is-invalid, .form-select.input-pill.is-invalid { border-color: var(--bs-danger) !important; }
+    .cta-btn { display: flex; width: 100%; justify-content: center; align-items: center; border-radius: 12px; background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%); color: #018942; font-weight: 700; font-size: 1rem; padding: 1rem 1.5rem; border: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%); color: #018942; }
+    .cta-btn:focus { outline: 3px solid rgba(1, 137, 66, 0.3); outline-offset: 2px; }
+    .section-header { background: rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.2); }
+    .section-title { font-size: 0.9rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+    .section-title::before { content: ''; width: 8px; height: 8px; background: #fff; border-radius: 50%; }
+    .disclaimer { font-size: 0.66rem; text-align: center; margin-top: 1.5rem; color: rgba(255, 255, 255, 0.8); }
+    footer { background: #018942; padding: 0.9rem 0.4rem; text-align: center; color: rgba(255, 255, 255, 0.9); font-size: 0.75rem; letter-spacing: 0.02em; }
+    @media (max-width: 575px) {
+      .hero-shell {
+        padding: 2rem 1rem 1rem;
+      }
+      .card-shell {
+        padding: 1.5rem 1rem;
+        width: min(100%, 380px);
+      }
+    }
+    
+    @media (min-width: 576px) { 
+      .hero-shell {
+        padding: 2.5rem 1.5rem 1rem;
+      }
+      .card-shell { 
+        padding: 2.25rem 2rem; 
+        width: min(100%, 400px);
+      } 
+    }
+    
+    @media (min-width: 768px) { 
+      .hero-shell {
+        padding: 3rem 2rem 1rem;
+      }
+      .card-shell { 
+        width: min(100%, 420px); 
+        padding: 2.5rem 2.25rem;
+      } 
+    }
+    
+    @media (min-width: 992px) {
+      .card-shell {
+        width: min(100%, 450px);
+        padding: 3rem 2.5rem;
+      }
+    }
+    
+    .back-link {
+      position: fixed; 
+      top: 20px; 
+      left: 20px;
+      display: inline-flex; 
+      align-items: center; 
+      gap: 8px;
+      padding: 10px 16px; 
+      border-radius: 25px;
+      background: 
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15) 0%, transparent 70%),
+        linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(0, 168, 85, 0.08) 100%);
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(255,255,255,0.4); 
+      color: rgba(255,255,255,0.95); 
+      text-decoration: none; 
+      font-size: 0.9rem; 
+      font-weight: 700;
+      box-shadow: 
+        0 8px 25px rgba(0,0,0,0.2),
+        0 0 20px rgba(1, 137, 66, 0.1),
+        inset 0 2px 4px rgba(255, 255, 255, 0.1);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 20;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+    
+    .back-link:hover { 
+      background: 
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.25) 0%, transparent 70%),
+        linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(0, 168, 85, 0.15) 100%);
+      transform: translateY(-2px) scale(1.05); 
+      box-shadow: 
+        0 12px 35px rgba(0,0,0,0.3),
+        0 0 30px rgba(1, 137, 66, 0.2),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2);
+    }
+    
+    .back-link:focus { 
+      outline: 4px solid rgba(1, 137, 66, 0.4); 
+      outline-offset: 3px; 
+    }
+    
+    .back-link .chev { 
+      font-size: 1.1rem; 
+      line-height: 1; 
+      transition: transform 0.3s ease;
+    }
+    
+    .back-link:hover .chev {
+      transform: translateX(-2px);
+    }
+
+    .progress-wrap { 
+      position: relative; 
+      width: 100%; 
+      height: 28px; 
+      border-radius: 999px; 
+      border: 2px solid rgba(255,255,255,0.4); 
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(0, 168, 85, 0.1) 100%);
+      backdrop-filter: blur(10px);
+      padding: 3px; 
+      margin: 0 0 2rem; 
+      overflow: hidden; 
+      box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.2),
+        inset 0 2px 4px rgba(255, 255, 255, 0.1);
+      animation: fadeInUp 0.8s ease-out 1s both;
+    }
+    
+    .progress-fill { 
+      height: 100%; 
+      background: linear-gradient(135deg, #ffffff 0%, #00a855 50%, #018942 100%);
+      border-radius: 999px; 
+      box-shadow: 
+        inset 0 2px 6px rgba(0,0,0,0.2),
+        0 0 20px rgba(1, 137, 66, 0.3);
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
+      width: 0%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-fill::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      animation: progressShimmer 2s ease-in-out infinite;
+    }
+    
+    .progress-text { 
+      position: absolute; 
+      inset: 0; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-weight: 800; 
+      font-size: 0.8rem; 
+      color: #ffffff; 
+      pointer-events: none;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      animation: progressPulse 2s ease-in-out infinite;
+    }
+
+    .note { font-size: 0.75rem; color: rgba(255,255,255,0.9); margin-top: 0.25rem; }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes particleMove1 {
+      0% { background-position: 0% 0%, 20% 20%, 40% 40%, 60% 60%, 80% 80%, 10% 10%, 30% 30%, 50% 50%, 70% 70%, 90% 90%, 5% 5%, 15% 15%; }
+      100% { background-position: 100% 100%, 80% 80%, 60% 60%, 40% 40%, 20% 20%, 90% 90%, 70% 70%, 50% 50%, 30% 30%, 10% 10%, 95% 95%, 85% 85%; }
+    }
+
+    @keyframes particleMove2 {
+      0% { background-position: 100% 0%, 80% 20%, 60% 40%, 40% 60%, 20% 80%, 90% 10%, 70% 30%, 50% 50%, 30% 70%, 10% 90%, 95% 5%, 85% 15%; }
+      100% { background-position: 0% 100%, 20% 80%, 40% 60%, 60% 40%, 80% 20%, 10% 90%, 30% 70%, 50% 50%, 70% 30%, 90% 10%, 5% 95%, 15% 85%; }
+    }
+
+    @keyframes particleMove3 {
+      0% { background-position: 50% 0%, 30% 20%, 70% 40%, 10% 60%, 90% 80%, 40% 10%, 60% 30%, 20% 50%, 80% 70%, 0% 90%, 45% 5%, 55% 15%; }
+      100% { background-position: 50% 100%, 70% 80%, 30% 60%, 90% 40%, 10% 20%, 60% 90%, 40% 70%, 80% 50%, 20% 30%, 100% 10%, 55% 95%, 45% 85%; }
+    }
+
+    @keyframes gridMove {
+      0% { background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; }
+      100% { background-position: 50px 50px, 50px 50px, 25px 25px, 25px 25px, 100px 100px, 100px 100px; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes formGlow {
+      0%, 100% { box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4), 0 0 60px rgba(1, 137, 66, 0.2), inset 0 2px 4px rgba(255, 255, 255, 0.2); }
+      50% { box-shadow: 0 35px 100px rgba(0, 0, 0, 0.5), 0 0 80px rgba(1, 137, 66, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.3); }
+    }
+
+    @keyframes cardRotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes dotMove {
+      0% { background-position: 0 0, 0 0, 0 0, 0 0; }
+      100% { background-position: 60px 60px, 40px 40px, 80px 80px, 30px 30px; }
+    }
+
+    @keyframes textGlow {
+      0%, 100% { text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(1, 137, 66, 0.3); }
+      50% { text-shadow: 0 6px 30px rgba(0, 0, 0, 0.7), 0 0 50px rgba(1, 137, 66, 0.6); }
+    }
+
+    @keyframes progressShimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    @keyframes progressPulse {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(1, 137, 66, 0.6);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(1, 137, 66, 0.8);
+    }
+
+    ::selection {
+      background: rgba(1, 137, 66, 0.3);
+      color: white;
+    }
+
+    ::-moz-selection {
+      background: rgba(1, 137, 66, 0.3);
+      color: white;
+    }
+  </style>
+  <style>
+    /* Minimal utilities to lessen Bootstrap dependency on first paint */
+    .container { max-width: 960px; margin-left: auto; margin-right: auto; }
+    .d-flex { display: flex; }
+    .align-items-center { align-items: center; }
+    .justify-content-center { justify-content: center; }
+    .min-vh-100 { min-height: 100vh; }
+    .w-100 { width: 100%; }
+    .px-3 { padding-left: 1rem; padding-right: 1rem; }
+    @media (min-width: 576px) { .px-sm-4 { padding-left: 1.5rem; padding-right: 1.5rem; } }
+    @media (min-width: 768px) { .px-md-5 { padding-left: 3rem; padding-right: 3rem; } }
+
+    @media (max-width: 768px) {
+      body { animation: none; }
+      body::before, body::after { animation: none; opacity: .4; }
+      .card-shell { backdrop-filter: none; box-shadow: 0 12px 28px rgba(0,0,0,.25); }
+    }
+  </style>
+</head>
+<body>
+  <a href="Empresarialpj.html" class="back-link" aria-label="Voltar para a etapa anterior"><span class="chev">←</span><span>Voltar</span></a>
+  <main class="hero-shell">
+    <div class="card-shell">
+      <p class="tagline text-uppercase mb-3">#Vem se conectar com a</p>
+      <div class="logo-wrap">
+        <img src="../Assets/logo-mznet.png" alt="Logotipo MZNet" class="img-fluid" style="max-width: 240px;" />
+      </div>
+      <h1 class="hero-title">Faça seu cadastro</h1>
+      <div class="progress-wrap" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-fill"></div>
+        <div class="progress-text">0% Concluído</div>
+      </div>
+
+      <form class="row g-3" action="sucesso-pj.html" method="get" novalidate>
+        <!-- Seção: Informações dos Sócios (sem título) -->
+        <div class="col-12">
+          <div class="section-header">
+            <label class="form-label" for="qtd_socios">Quantos Sócios a empresa possui? *</label>
+            <select id="qtd_socios" name="qtd_socios" class="form-select form-select-lg input-pill" required>
+              <option value="" selected disabled>Selecione</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="mais3">+ de 3</option>
+            </select>
+            <div class="invalid-feedback">Informe a quantidade de sócios.</div>
+          </div>
+        </div>
+
+        <!-- Seção: Informações dos Sócios -->
+        <div class="col-12" id="socios_wrap" style="display:none;">
+          <div class="section-header">
+            <div class="section-title">Informações dos Sócios</div>
+            <div class="row g-3">
+              <!-- Sócio 1 -->
+              <div class="col-12 socio socio-1" style="display:none;">
+                <label class="form-label">Sócio 1</label>
+                <input id="socio1_nome" name="socio1_nome" type="text" class="form-control form-control-lg input-pill mb-2" placeholder="Nome completo" />
+                <div class="invalid-feedback">Informe o nome do sócio.</div>
+                <input id="socio1_cpf" name="socio1_cpf" type="text" class="form-control form-control-lg input-pill mb-2" placeholder="CPF (000.000.000-00)" inputmode="numeric" maxlength="14" />
+                <div class="invalid-feedback">CPF inválido.</div>
+                <input id="socio1_tel" name="socio1_tel" type="text" class="form-control form-control-lg input-pill" placeholder="Telefone (00) 00000-0000" inputmode="tel" maxlength="16" />
+                <div class="invalid-feedback">Informe um telefone válido.</div>
+              </div>
+              <!-- Sócio 2 -->
+              <div class="col-12 socio socio-2" style="display:none;">
+                <label class="form-label">Sócio 2</label>
+                <input id="socio2_nome" name="socio2_nome" type="text" class="form-control form-control-lg input-pill mb-2" placeholder="Nome completo" />
+                <div class="invalid-feedback">Informe o nome do sócio.</div>
+                <input id="socio2_cpf" name="socio2_cpf" type="text" class="form-control form-control-lg input-pill mb-2" placeholder="CPF (000.000.000-00)" inputmode="numeric" maxlength="14" />
+                <div class="invalid-feedback">CPF inválido.</div>
+                <input id="socio2_tel" name="socio2_tel" type="text" class="form-control form-control-lg input-pill" placeholder="Telefone (00) 00000-0000" inputmode="tel" maxlength="16" />
+                <div class="invalid-feedback">Informe um telefone válido.</div>
+              </div>
+              <!-- Sócio 3 -->
+              <div class="col-12 socio socio-3" style="display:none;">
+                <label class="form-label">Sócio 3</label>
+                <input id="socio3_nome" name="socio3_nome" type="text" class="form-control form-control-lg input-pill mb-2" placeholder="Nome completo" />
+                <div class="invalid-feedback">Informe o nome do sócio.</div>
+                <input id="socio3_cpf" name="socio3_cpf" type="text" class="form-control form-control-lg input-pill mb-2" placeholder="CPF (000.000.000-00)" inputmode="numeric" maxlength="14" />
+                <div class="invalid-feedback">CPF inválido.</div>
+                <input id="socio3_tel" name="socio3_tel" type="text" class="form-control form-control-lg input-pill" placeholder="Telefone (00) 00000-0000" inputmode="tel" maxlength="16" />
+                <div class="invalid-feedback">Informe um telefone válido.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Seção: Plano e Vencimento -->
+        <div class="col-12">
+          <div class="section-header">
+            <div class="section-title">Plano e Vencimento</div>
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label" for="plano_assinatura">Plano *</label>
+                <select id="plano_assinatura" name="plano_assinatura" class="form-select form-select-lg input-pill" required>
+                  <option value="" selected disabled>Selecione</option>
+                  <optgroup label="Normais">
+                    <option>100 Mega - R$59,90</option>
+                    <option>250 Mega - R$69,90</option>
+                    <option>500 Mega - R$79,90</option>
+                    <option>1000Mega (1Gb) - R$99,90</option>
+                  </optgroup>
+                  <optgroup label="IP Dinâmico">
+                    <option>100 Mega + IP Dinâmico - R$74,90</option>
+                    <option>250 Mega + IP Dinâmico - R$84,90</option>
+                    <option>500 Mega + IP Dinâmico - R$94,90</option>
+                    <option>1000Mega (1Gb) + IP Dinâmico - R$114,90</option>
+                  </optgroup>
+                  <optgroup label="IP Fixo">
+                    <option>100 Mega + IP Fixo - R$259,90</option>
+                    <option>250 Mega + IP Fixo - R$269,90</option>
+                    <option>500 Mega + IP Fixo - R$279,90</option>
+                    <option>1000Mega (1Gb) + IP Fixo - R$299,90</option>
+                  </optgroup>
+                </select>
+                <div class="invalid-feedback">Selecione um plano.</div>
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="vencimento">Vencimento da mensalidade *</label>
+                <select id="vencimento" name="vencimento" class="form-select form-select-lg input-pill" required>
+                  <option value="" selected disabled>Selecione</option>
+                  <option>05</option>
+                  <option>10</option>
+                  <option>15</option>
+                  <option>20</option>
+                  <option>25</option>
+                </select>
+                <div class="invalid-feedback">Selecione o vencimento.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 pt-2">
+          <button type="submit" class="cta-btn">Finalizar</button>
+        </div>
+      </form>
+
+      <p class="disclaimer">Preencha as referências pessoais dos sócios conforme a quantidade informada.</p>
+    </div>
+  </main>
+  <footer>
+    Mznet @2025 - Seu dia, sem interrupções
+  </footer>
+
+  <script>
+    (function(){
+      function onlyDigits(v){ return v.replace(/\D+/g, ''); }
+      function applyPattern(digits, pattern){
+        let out = '', di = 0;
+        for (let i = 0; i < pattern.length; i++) {
+          const pc = pattern[i];
+          if (pc === '0') {
+            if (di < digits.length) { out += digits[di++]; } else { break; }
+          } else {
+            if (di > 0 && di <= digits.length) { out += pc; }
+          }
+        }
+        return out;
+      }
+      function attachCpfMask(el){
+        if (!el) return;
+        let lastKey = '';
+        el.addEventListener('keydown', (e) => { lastKey = e.key; });
+        const handler = () => {
+          const digits = onlyDigits(el.value).slice(0, 11);
+          let out = applyPattern(digits, '000.000.000-00');
+          if (lastKey === 'Backspace') {
+            while (out && /\D$/.test(out)) out = out.slice(0, -1);
+          }
+          el.value = out;
+          lastKey = '';
+          validateCpfField(el);
+        };
+        el.addEventListener('input', handler);
+        el.addEventListener('blur', handler);
+      }
+      function isValidCPF(d){
+        if (!d || d.length !== 11) return false;
+        if (/^(\d)\1{10}$/.test(d)) return false;
+        let sum = 0;
+        for (let i = 0; i < 9; i++) sum += parseInt(d[i],10) * (10 - i);
+        let dv1 = 11 - (sum % 11);
+        if (dv1 >= 10) dv1 = 0;
+        if (dv1 !== parseInt(d[9],10)) return false;
+        sum = 0;
+        for (let i = 0; i < 10; i++) sum += parseInt(d[i],10) * (11 - i);
+        let dv2 = 11 - (sum % 11);
+        if (dv2 >= 10) dv2 = 0;
+        return dv2 === parseInt(d[10],10);
+      }
+      function validateCpfField(el){
+        if (!el) return;
+        const digits = onlyDigits(el.value);
+        if (!el.required && digits.length === 0) { el.setCustomValidity(''); return; }
+        if (digits.length === 0) { el.setCustomValidity('Informe o CPF'); return; }
+        if (digits.length < 11) { el.setCustomValidity('CPF incompleto'); return; }
+        const ok = isValidCPF(digits);
+        el.setCustomValidity(ok ? '' : 'CPF inválido');
+      }
+      function attachPhoneMask(el){
+        if (!el) return;
+        let lastKey = '';
+        el.addEventListener('keydown', (e) => { lastKey = e.key; });
+        el.addEventListener('input', () => {
+          const digits = onlyDigits(el.value).slice(0, 11);
+          const pattern = digits.length > 10 ? '(00) 00000-0000' : '(00) 0000-0000';
+          let out = applyPattern(digits, pattern);
+          if (lastKey === 'Backspace') {
+            while (out && /\D$/.test(out)) out = out.slice(0, -1);
+          }
+          el.value = out;
+          lastKey = '';
+        });
+      }
+
+      const qtd = document.getElementById('qtd_socios');
+      const socio1 = document.querySelector('.socio-1');
+      const socio2 = document.querySelector('.socio-2');
+      const socio3 = document.querySelector('.socio-3');
+
+      const s1 = { nome: document.getElementById('socio1_nome'), cpf: document.getElementById('socio1_cpf'), tel: document.getElementById('socio1_tel') };
+      const s2 = { nome: document.getElementById('socio2_nome'), cpf: document.getElementById('socio2_cpf'), tel: document.getElementById('socio2_tel') };
+      const s3 = { nome: document.getElementById('socio3_nome'), cpf: document.getElementById('socio3_cpf'), tel: document.getElementById('socio3_tel') };
+
+      [s1.cpf, s2.cpf, s3.cpf].forEach(el => { attachCpfMask(el); });
+      [s1.tel, s2.tel, s3.tel].forEach(attachPhoneMask);
+
+      function setSocioRequired(s, req){
+        s.nome.required = req; s.cpf.required = req; s.tel.required = req;
+      }
+      function clearSocioValues(s){ s.nome.value=''; s.cpf.value=''; s.tel.value=''; }
+
+      function renderSocios(){
+        const v = qtd.value;
+        const sociosWrap = document.getElementById('socios_wrap');
+        sociosWrap.style.display = (v === '1' || v === '2' || v === '3' || v === 'mais3') ? 'block' : 'none';
+        socio1.style.display = (v === '1' || v === '2' || v === '3' || v === 'mais3') ? 'block' : 'none';
+        socio2.style.display = (v === '2' || v === '3' || v === 'mais3') ? 'block' : 'none';
+        socio3.style.display = (v === '3' || v === 'mais3') ? 'block' : 'none';
+
+        setSocioRequired(s1, v === '1' || v === '2' || v === '3' || v === 'mais3');
+        setSocioRequired(s2, v === '2' || v === '3' || v === 'mais3');
+        setSocioRequired(s3, v === '3' || v === 'mais3');
+
+        if (!(v === '2' || v === '3' || v === 'mais3')) { clearSocioValues(s2); }
+        if (!(v === '3' || v === 'mais3')) { clearSocioValues(s3); }
+
+        // Revalida CPFs conforme obrigatoriedade
+        [s1.cpf, s2.cpf, s3.cpf].forEach(validateCpfField);
+        // Adia salvamento até progress map estar definido
+        setTimeout(() => { try { savePj(); updateProgress(); } catch(e){} }, 0);
+      }
+      qtd.addEventListener('change', renderSocios);
+      renderSocios();
+
+      function updateState(el){
+        if (!el) return;
+        if (el.checkValidity()) {
+          el.classList.remove('is-invalid');
+          if (el.value) el.classList.add('is-valid');
+        } else {
+          el.classList.remove('is-valid');
+          if (el.required) el.classList.add('is-invalid');
+        }
+      }
+      const form = document.querySelector('form');
+      const controls = form.querySelectorAll('input, select, textarea');
+      controls.forEach(el => {
+        el.addEventListener('input', () => updateState(el));
+        el.addEventListener('blur', () => updateState(el));
+        el.addEventListener('change', () => updateState(el));
+      });
+      form.addEventListener('submit', (e) => {
+        renderSocios();
+        controls.forEach(updateState);
+        if (!form.checkValidity()) { e.preventDefault(); e.stopPropagation(); }
+        form.classList.add('was-validated');
+      });
+
+      // ====== Progresso PJ dinâmico ======
+      const pjMap = {
+        qtd_socios: 'qtd_socios',
+        socio1_nome: 'socio1_nome', socio1_cpf: 'socio1_cpf', socio1_tel: 'socio1_tel',
+        socio2_nome: 'socio2_nome', socio2_cpf: 'socio2_cpf', socio2_tel: 'socio2_tel',
+        socio3_nome: 'socio3_nome', socio3_cpf: 'socio3_cpf', socio3_tel: 'socio3_tel',
+        plano_assinatura: 'plano_assinatura', vencimento: 'vencimento'
+      };
+      function setPjField(key, value, ok){ localStorage.setItem('pj:'+key, value||''); localStorage.setItem('pj:ok:'+key, ok?'1':'0'); }
+      function getPj(key){ return localStorage.getItem('pj:'+key) || ''; }
+      function getPjOk(key){ return localStorage.getItem('pj:ok:'+key) === '1'; }
+      function getValByKey(key){
+        for (const id in pjMap){ if (pjMap[id] === key){ const el = document.getElementById(id); if (el) return el.value; } }
+        return getPj(key);
+      }
+      function getOkByKey(key){
+        for (const id in pjMap){ if (pjMap[id] === key){ const el = document.getElementById(id); if (el) return el.checkValidity() && !!el.value; } }
+        return getPjOk(key);
+      }
+      function savePj(){
+        Object.keys(pjMap).forEach(id => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          const key = pjMap[id];
+          const ok = el.checkValidity() && (!!el.value || el.type === 'select-one');
+          setPjField(key, el.value, ok);
+        });
+      }
+      function getState(key){ return { value: getPj(key), ok: getPjOk(key) }; }
+      function updateProgress(){
+        let done = 0, total = 0;
+        const unit = (ok) => { total++; if (ok) done++; };
+        // Página 1
+        unit(getOkByKey('razao_social'));
+        unit(getOkByKey('cnpj'));
+        unit(getOkByKey('abertura'));
+        unit(getOkByKey('nome_fantasia'));
+        unit(getOkByKey('nome_fachada'));
+        unit(getOkByKey('area_trabalho'));
+        // Página 2
+        unit(getOkByKey('cep'));
+        unit(getOkByKey('cidade'));
+        unit(getOkByKey('rua'));
+        unit(getOkByKey('numero'));
+        unit(getOkByKey('bairro'));
+        {
+          const sel = (getValByKey('tem_complemento')||'').toLowerCase();
+          const ok = getOkByKey('tem_complemento') && (sel === 'sim' ? getOkByKey('complemento') : true);
+          unit(ok);
+        }
+        unit(getOkByKey('tipo_comercio'));
+        unit(getOkByKey('tempo_local'));
+        {
+          const v = (getValByKey('tipo_estab')||'').toLowerCase();
+          const ok = getOkByKey('tipo_estab') && (v.startsWith('outro') ? getOkByKey('estab_outro') : true);
+          unit(ok);
+        }
+        // Página 3
+        unit(getOkByKey('tel_empresa'));
+        unit(getOkByKey('whatsapp'));
+        unit(getOkByKey('email_comercial'));
+        {
+          const v = (getValByKey('tem_internet')||'').toLowerCase();
+          const ok = getOkByKey('tem_internet') && (v === 'sim' ? (getOkByKey('operadora') && getOkByKey('plano_internet') && getOkByKey('valor')) : true);
+          unit(ok);
+        }
+        // Página 4
+        {
+          const q = (getValByKey('qtd_socios')||'');
+          const n = (q === '2') ? 2 : (q === '3' || q === 'mais3') ? 3 : (q === '1' ? 1 : 0);
+          let subsOk = true;
+          for (let i=1;i<=n;i++){
+            subsOk = subsOk && getOkByKey(`socio${i}_nome`) && getOkByKey(`socio${i}_cpf`) && getOkByKey(`socio${i}_tel`);
+          }
+          const ok = getOkByKey('qtd_socios') && subsOk;
+          unit(ok);
+        }
+        unit(getOkByKey('plano_assinatura'));
+        unit(getOkByKey('vencimento'));
+        const raw = Math.max(0, Math.min(100, Math.round(done*100/(total||1))));
+        const maxPrev = parseInt(localStorage.getItem('pj:maxPct')||'0', 10) || 0;
+        const pct = raw < maxPrev ? maxPrev : raw;
+        if (pct > maxPrev) localStorage.setItem('pj:maxPct', String(pct));
+        const wrap = document.querySelector('.progress-wrap');
+        const fill = wrap.querySelector('.progress-fill');
+        const txt = wrap.querySelector('.progress-text');
+        fill.style.width = pct + '%';
+        wrap.setAttribute('aria-valuenow', String(pct));
+        txt.textContent = pct + '% Concluído';
+      }
+      function seedFromQuery(){
+        try {
+          const params = new URLSearchParams(window.location.search);
+          params.forEach((v, k) => { setPjField(k, v, !!v); });
+        } catch {}
+      }
+      function seedFromStorage(){
+        Object.keys(pjMap).forEach(id => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          const key = pjMap[id];
+          const val = getPj(key);
+          if (val){
+            el.value = val;
+            try { el.dispatchEvent(new Event('input', { bubbles: true })); } catch {}
+          }
+        });
+        try { renderSocios(); } catch {}
+      }
+      function wireProgress(){
+        seedFromQuery();
+        seedFromStorage();
+        const save = () => { savePj(); updateProgress(); };
+        controls.forEach(el => { ['input','change','blur'].forEach(ev => el.addEventListener(ev, save)); });
+        save();
+      }
+      wireProgress();
+    })();
+  </script>
+  <script>
+    // Pause CSS animations when tab is hidden to save resources
+    (function(){
+      const toggle = () => {
+        const paused = document.hidden;
+        document.querySelectorAll('*').forEach(el => {
+          const style = getComputedStyle(el);
+          if (style.animationName !== 'none') el.style.animationPlayState = paused ? 'paused' : 'running';
+        });
+      };
+      document.addEventListener('visibilitychange', toggle, { passive: true });
+    })();
+  </script>
+</body>
+</html>
