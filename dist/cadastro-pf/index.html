@@ -969,7 +969,7 @@
         };
 
         try {
-          const res = await submitEficha(payload);
+          const res = await window.submitEficha(payload);
           alert(`Enviado! ID: ${res.id_applicant} (status: ${res.status})`);
           // opcional: redirecionar para “obrigado”
           // location.href = "sucesso-pf.html";
