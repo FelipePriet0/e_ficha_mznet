@@ -64,6 +64,7 @@
         radial-gradient(circle at 40% 80%, rgba(1, 77, 40, 0.3) 0%, transparent 50%),
         linear-gradient(135deg, #018942 0%, #016b35 25%, #014d28 50%, #012d1a 75%, #001a0f 100%);
       background-size: 400% 400%, 300% 300%, 500% 500%, 400% 400%;
+      background-color: #012d1a; /* mobile-safe fallback */
       /* Reduce runtime cost: keep a single smooth animation */
       animation: gradientShift 24s ease infinite;
       min-height: 100vh;
