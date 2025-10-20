@@ -939,61 +939,45 @@
     })();
   </script>
   <script>
+    // Snippet mínimo solicitado (PF) - colocado no fim do body
     (function(){
       const form = document.querySelector('form');
       if (!form || typeof submitEficha !== 'function') return;
+      form.addEventListener('submit', async function(e){
+        if (e) e.preventDefault();
+        // coleta campos com as máscaras originais
+        const nome = (document.getElementById('nome')?.value || '').trim();
+        const cpf = (document.getElementById('cpf')?.value || '').trim();
+        const nascimento = (document.getElementById('nascimento')?.value || '').trim(); // dd/mm/aaaa
+        const telefone = (document.getElementById('telefone')?.value || '').trim();
+        const whatsapp = (document.getElementById('whatsapp')?.value || '').trim();
+        const naturalidade = (document.getElementById('naturalidade')?.value || '').trim();
+        const email = ((document.getElementById('email')?.value) || '').trim().toLowerCase();
+        const uf = ((document.getElementById('uf')?.value) || '').trim().toUpperCase();
 
-      function onlyDigits(v){ return (v || '').replace(/\D+/g, ''); }
-
-      async function handleSubmit(e){
-        // deixa a validação original rodar, mas evita submit padrão
-        e.preventDefault();
-
-        // se estiver inválido, não envia
-        if (!form.checkValidity()) return;
-
-        // coleta campos
-        const nome = document.getElementById('nome')?.value?.trim() || '';
-        const cpfMasked = document.getElementById('cpf')?.value?.trim() || '';
-        const nascimentoBR = document.getElementById('nascimento')?.value?.trim() || '';
-        const telefoneMasked = document.getElementById('telefone')?.value?.trim() || '';
-        const whatsappMasked = document.getElementById('whatsapp')?.value?.trim() || '';
-        const naturalidade = document.getElementById('naturalidade')?.value?.trim() || '';
-        const uf = document.getElementById('uf')?.value || '';
-        const email = document.getElementById('email')?.value?.trim() || '';
-
-        // monta payload (PF) no formato plano exigido pela Edge Function
         const payload = {
           tipo_pessoa: 'PF',
           primary_name: nome,
-          cpf: cpfMasked,
-          birth_date: nascimentoBR,
-          phone: telefoneMasked,
-          whatsapp: whatsappMasked,
-          email: email,
-          naturalidade: naturalidade,
+          cpf,
+          birth_date: nascimento,
+          phone: telefone,
+          whatsapp,
+          email,
+          naturalidade,
           uf_naturalidade: uf,
-          meta: {
-            user_agent: navigator.userAgent,
-            path: location.pathname
-          }
+          meta: { user_agent: navigator.userAgent, path: location.pathname }
         };
 
-        // desabilita botão para evitar duplo envio
-        const btn = form.querySelector('button[type="submit"]');
-        const prevLabel = btn ? btn.textContent : '';
-        if (btn) { btn.disabled = true; btn.textContent = 'Enviando…'; }
-
         try {
-          await submitEficha(payload);
-          window.location.href = 'sucesso-pf.html';
+          const res = await submitEficha(payload);
+          alert(`Enviado! ID: ${res.id_applicant} (status: ${res.status})`);
+          // opcional: redirecionar para “obrigado”
+          // location.href = "sucesso-pf.html";
         } catch (err) {
-          if (btn) { btn.disabled = false; btn.textContent = prevLabel; }
-          alert('Não foi possível enviar seu cadastro agora. Tente novamente em instantes.');
+          console.error(err);
+          alert("Não foi possível enviar agora. Tente novamente em instantes.");
         }
-      }
-
-      form.addEventListener('submit', handleSubmit);
+      });
     })();
   </script>
   <script>
